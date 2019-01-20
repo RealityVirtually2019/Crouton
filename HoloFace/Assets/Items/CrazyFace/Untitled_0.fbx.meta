@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: d79a7d053fb533f4081c355e10c778a8
-timeCreated: 1547859119
-licenseType: Free
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     100002: Untitled_0_Lofted_geo
@@ -18,12 +16,17 @@ ModelImporter:
     3300002: Untitled_0_Lofted_geo 1
     4300000: Untitled_0_Lofted_geo
     4300002: Untitled_0_Lofted_geo
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: d381e0f53def4a0d885331e9200bcbda_Lofted
+    second: {fileID: 2100000, guid: 34f4dd28fee0a26498716d6a4109e0bf, type: 2}
   materials:
     importMaterials: 1
     materialName: 2
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -37,6 +40,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -68,6 +72,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -87,7 +93,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

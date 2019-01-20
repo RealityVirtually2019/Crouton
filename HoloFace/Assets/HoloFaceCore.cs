@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using FaceProcessing;
 using UnityEngine.Windows.Speech;
+using System.Collections;
 
 #if WINDOWS_UWP
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ using Windows.Graphics.Imaging;
 
 public class HoloFaceCore : MonoBehaviour
 {
+    public static HoloFaceCore ins;
     [Tooltip("Shows FPS when Debug mode is enabled.")]
+    public string person;
     public Text FPSText;
     public Text BackendFaceTrackerTipText;
     public float LocalTrackerConfidenceThreshold = 900.0f;
@@ -26,7 +29,10 @@ public class HoloFaceCore : MonoBehaviour
     BackendFaceTracker backendFaceTracker;
     FaceRenderer faceRenderer;
     ItemManager itemManager;
-    
+#if WINDOWS_UWP
+    public SoftwareBitmap image;
+#endif
+
     int nProcessing = 0;
     float imageProcessingStartTime = 0.0f;
     float elapsedTime = 0.0f;
@@ -44,6 +50,11 @@ public class HoloFaceCore : MonoBehaviour
 
     int frameReportPeriod = 10;
     int frameCounter = 0;
+
+    private void Awake()
+    {
+        ins = this;
+    }
 
     void Start()
     {
@@ -77,6 +88,9 @@ public class HoloFaceCore : MonoBehaviour
     }
 
 #if WINDOWS_UWP
+    public IEnumerator ProcessPic() {
+        yield return new WaitForSeconds(0);
+    }
     void Update ()
     {
         while (executeOnMainThread.Count > 0)
@@ -100,7 +114,7 @@ public class HoloFaceCore : MonoBehaviour
 
         if (nProcessing < 1)
         {
-            SoftwareBitmap image = webcam.GetImage();
+            image = webcam.GetImage();
             if (image != null)
             {
                 Matrix4x4 webcamToWorldTransform = webcam.WebcamToWorldMatrix;

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ public class ItemManager : MonoBehaviour
     public GameObject[] MouthOpenActivations;
     public GameObject[] SmileActivations;
     public GameObject[] EyeBrowsRaisedActivations;
+    GameObject activeFace;
+    public Dictionary<string, GameObject> peopleItems = new Dictionary<string, GameObject>();
 
     bool debugMode = false;
     bool showingFace = false;
@@ -41,7 +44,10 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < tempTransforms.Length; i++)
         {
             if (tempTransforms[i].parent == FaceMesh.transform)
+            {
                 transforms.Add(tempTransforms[i]);
+                peopleItems.Add(tempTransforms[i].name, tempTransforms[i].gameObject);
+            }
         }
 #if WINDOWS_UWP
         for (int i = 0; i < transforms.Count; i++)
@@ -49,7 +55,7 @@ public class ItemManager : MonoBehaviour
 #endif
         gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
         gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
-        gestureRecognizer.TappedEvent += NextItem;
+        gestureRecognizer.TappedEvent += ((a, b, c) => StartCoroutine("ProcessPicture"));
         gestureRecognizer.StartCapturingGestures();
 
 #if WINDOWS_UWP
@@ -57,9 +63,14 @@ public class ItemManager : MonoBehaviour
 #else
         ShowFace();
 #endif
-        transforms[currentItem].gameObject.SetActive(true);
     }
-    
+
+    IEnumerator ProcessPicture()
+    {
+        yield return HoloFaceCore.ins.StartCoroutine("ProcessPic");
+        SelectPerson();
+    }
+
 
     public void ProcessFaceExpressions(float[] blendshapeWeights)
     {
@@ -118,9 +129,9 @@ public class ItemManager : MonoBehaviour
 
         if (debugMode && AttributeText != null)
         {
-            AttributeText.text = "Mouth open: " + mouthOpen.ToString() + ", val: " + blendshapeWeights[MouthOpenBlendshapeIdx].ToString("0.00") + "\n";
-            AttributeText.text += "Smile: " + smile.ToString() + ", val: " + blendshapeWeights[SmileBlendshapeIdx].ToString("0.00") + "\n";
-            AttributeText.text += "Eyebrows Raised: " + eyeBrowsRaised.ToString() + ", val: " + (-blendshapeWeights[EyeBrowRaiseBlendshapeIdx]).ToString("0.00") + "\n";
+            //AttributeText.text = "people: " + string.Join(";", peopleItems.Select(x => x.Key + "=" + x.Value).ToArray()) + "\n";
+            AttributeText.text = "activeFace: " + (activeFace != null ? activeFace.name : "null") + "\n";
+            AttributeText.text += "person: " + HoloFaceCore.ins.person + "\n";
         }
     }
 
@@ -152,16 +163,12 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    void NextItem(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
+    void SelectPerson()
     {
-        if (currentItem != -1)
-            transforms[currentItem].gameObject.SetActive(false);
-        currentItem++;
-        if (currentItem >= transforms.Count)
-        {
-            currentItem = -1;
-            return;
-        }
-        transforms[currentItem].gameObject.SetActive(true);
+        HoloFaceCore.ins.person = "marcus";
+        if (activeFace != null)
+            activeFace.SetActive(false);
+        activeFace = peopleItems[HoloFaceCore.ins.person];
+        activeFace.SetActive(true);
     }
 }
