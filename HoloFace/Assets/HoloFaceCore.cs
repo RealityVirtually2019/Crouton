@@ -180,7 +180,8 @@ public class HoloFaceCore : MonoBehaviour
             executeOnMainThread.Enqueue(() =>
             {
                 faceRenderer.ResetFitter();
-                FaceAnalysis.Instance.currentPerson = "";
+                //FaceAnalysis.Instance.currentPerson = "DEFAULT";
+                //ItemManager.ins.SelectPerson();
             });
         }
 

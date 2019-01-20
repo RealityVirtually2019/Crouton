@@ -135,7 +135,7 @@ public class FaceAnalysis : MonoBehaviour
 
         // Resize and position the new cursor
         newLabel.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-        newLabel.transform.position = new Vector3(0f, 3f, 60f);
+        newLabel.transform.position = new Vector3(0f, -3f, 60f);
 
         // Creating the text of the Label
         labelText = newLabel.AddComponent<TextMesh>();

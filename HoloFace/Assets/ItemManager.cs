@@ -8,6 +8,8 @@ public class ItemManager : MonoBehaviour
     [Tooltip("Shows the attribute values when Debug mode is enabled.")]
     public Text AttributeText;
 
+    public static ItemManager ins;
+
     public int MouthOpenBlendshapeIdx = 0;
     public float MouthOpenBlendshapeThreshold = 0.40f;
     public int SmileBlendshapeIdx = 1;
@@ -39,6 +41,7 @@ public class ItemManager : MonoBehaviour
 
     void Awake()
     {
+        ins = this;
         transforms = new List<Transform>();
         Transform[] tempTransforms = FaceMesh.GetComponentsInChildren<Transform>();
         for (int i = 0; i < tempTransforms.Length; i++)
@@ -181,7 +184,7 @@ public class ItemManager : MonoBehaviour
         transforms[currentItem].gameObject.SetActive(true);
     }
 
-    void SelectPerson()
+    public void SelectPerson()
     {
         if (activeFace != null)
             activeFace.SetActive(false);
