@@ -46,10 +46,10 @@ public class ImageCapture : MonoBehaviour {
     {
         // Initialises user gestures capture
         // Initialises user gestures capture 
-        recognizer = new GestureRecognizer();
-        recognizer.SetRecognizableGestures(GestureSettings.Tap);
-        recognizer.Tapped += TapHandler;
-        recognizer.StartCapturingGestures();
+        //recognizer = new GestureRecognizer();
+        //recognizer.SetRecognizableGestures(GestureSettings.Tap);
+        //recognizer.Tapped += TapHandler;
+        //recognizer.StartCapturingGestures();
     }
 
 
@@ -61,9 +61,10 @@ public class ImageCapture : MonoBehaviour {
     /// <summary>
     /// Respond to Tap Input.
     /// </summary>
-    private void TapHandler(TappedEventArgs obj)
+    public void TapHandler(/*TappedEventArgs obj*/)
     {
         tapsCount++;
+        FaceAnalysis.Instance.analyzing = true;
         ExecuteImageCaptureAndAnalysis();
     }
 
@@ -76,6 +77,7 @@ public class ImageCapture : MonoBehaviour {
     /// </summary>
     public void ExecuteImageCaptureAndAnalysis()
     {
+        tapsCount++;
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending
             ((res) => res.width * res.height).First();
         Texture2D targetTexture = new Texture2D(cameraResolution.width, cameraResolution.height);

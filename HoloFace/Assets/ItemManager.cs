@@ -19,6 +19,9 @@ public class ItemManager : MonoBehaviour
     public GameObject[] MouthOpenActivations;
     public GameObject[] SmileActivations;
     public GameObject[] EyeBrowsRaisedActivations;
+    GameObject activeFace;
+    public Dictionary<string, GameObject> peopleItems = new Dictionary<string, GameObject>();
+
 
     bool debugMode = false;
     bool showingFace = false;
@@ -41,25 +44,38 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < tempTransforms.Length; i++)
         {
             if (tempTransforms[i].parent == FaceMesh.transform)
+            {
                 transforms.Add(tempTransforms[i]);
+                peopleItems.Add(tempTransforms[i].name, tempTransforms[i].gameObject);
+            }
         }
 #if WINDOWS_UWP
         for (int i = 0; i < transforms.Count; i++)
             transforms[i].gameObject.SetActive(false);
+        gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+        gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
+        gestureRecognizer.TappedEvent += ((a, b, c) => StartCoroutine("ProcessPicture"));
+        gestureRecognizer.StartCapturingGestures();
 #endif
-        //gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
-        //gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
-        //gestureRecognizer.TappedEvent += NextItem;
-        //gestureRecognizer.StartCapturingGestures();
 
 #if WINDOWS_UWP
         HideFace();
 #else
         ShowFace();
 #endif
-        transforms[currentItem].gameObject.SetActive(true);
     }
-    
+#if WINDOWS_UWP
+    IEnumerator ProcessPicture()
+    {
+        HoloFaceCore.ins.webcam.StopCamera();
+        ImageCapture.instance.TapHandler();
+        yield return new WaitWhile(() => FaceAnalysis.Instance.analyzing);
+        HoloFaceCore.ins.webcam.InitializeMediaCapture();
+        if (FaceAnalysis.Instance.currentPerson != "")
+            SelectPerson();
+    }
+#endif
+
 
     public void ProcessFaceExpressions(float[] blendshapeWeights)
     {
@@ -163,5 +179,13 @@ public class ItemManager : MonoBehaviour
             return;
         }
         transforms[currentItem].gameObject.SetActive(true);
+    }
+
+    void SelectPerson()
+    {
+        if (activeFace != null)
+            activeFace.SetActive(false);
+        activeFace = peopleItems[FaceAnalysis.Instance.currentPerson];
+        activeFace.SetActive(true);
     }
 }

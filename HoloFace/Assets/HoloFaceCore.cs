@@ -13,6 +13,7 @@ using Windows.Graphics.Imaging;
 
 public class HoloFaceCore : MonoBehaviour
 {
+    public static HoloFaceCore ins;
     [Tooltip("Shows FPS when Debug mode is enabled.")]
     public Text FPSText;
     public Text BackendFaceTrackerTipText;
@@ -21,7 +22,7 @@ public class HoloFaceCore : MonoBehaviour
     public int LocalTrackerNumberOfIters = 3;
     public int nLandmarks = 51;
 
-    HololensCameraUWP webcam;
+    public HololensCameraUWP webcam;
     LocalFaceTracker localFaceTracker;
     BackendFaceTracker backendFaceTracker;
     FaceRenderer faceRenderer;
@@ -44,6 +45,11 @@ public class HoloFaceCore : MonoBehaviour
 
     int frameReportPeriod = 10;
     int frameCounter = 0;
+
+    void Awake()
+    {
+        ins = this;
+    }
 
     void Start()
     {
@@ -174,6 +180,7 @@ public class HoloFaceCore : MonoBehaviour
             executeOnMainThread.Enqueue(() =>
             {
                 faceRenderer.ResetFitter();
+                FaceAnalysis.Instance.currentPerson = "";
             });
         }
 

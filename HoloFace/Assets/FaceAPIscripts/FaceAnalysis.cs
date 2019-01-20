@@ -14,6 +14,10 @@ public class FaceAnalysis : MonoBehaviour
     /// </summary>
     public static FaceAnalysis Instance;
 
+    public bool analyzing = false;
+
+    public string currentPerson = "";
+
     /// <summary>
     /// The analysis result text
     /// </summary>
@@ -279,6 +283,8 @@ public class FaceAnalysis : MonoBehaviour
 
             // Display the name of the person in the UI
             labelText.text = identifiedPerson_RootObject.name;
+            currentPerson = identifiedPerson_RootObject.name;
+            analyzing = false;
             Debug.Log("~~~PERSON FOUND: " + identifiedPerson_RootObject.name);
         }
     }

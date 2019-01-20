@@ -160,5 +160,11 @@ public class HololensCameraUWP : MonoBehaviour
 
         webcamInitialized = true;
     }
+
+    public void StopCamera()
+    {
+        _holoLensMediaFrameSourceGroup.StopAsync();
+        webcamInitialized = false;
+    }
 #endif
 }
