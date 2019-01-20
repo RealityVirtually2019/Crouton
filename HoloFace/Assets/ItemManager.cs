@@ -47,10 +47,10 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < transforms.Count; i++)
             transforms[i].gameObject.SetActive(false);
 #endif
-        gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
-        gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
-        gestureRecognizer.TappedEvent += NextItem;
-        gestureRecognizer.StartCapturingGestures();
+        //gestureRecognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+        //gestureRecognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
+        //gestureRecognizer.TappedEvent += NextItem;
+        //gestureRecognizer.StartCapturingGestures();
 
 #if WINDOWS_UWP
         HideFace();

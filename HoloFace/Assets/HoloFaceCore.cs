@@ -65,9 +65,9 @@ public class HoloFaceCore : MonoBehaviour
             keywordCollection.Add("Hide debug", HideDebug);
             keywordCollection.Add("Computer", BackendProcessing);
             keywordCollection.Add("Local", LocalProcessing);
-            keywordCollection.Add("Show face", ShowFace);
+            keywordCollection.Add("Show face", ImageCapture.instance.ExecuteImageCaptureAndAnalysis);
             keywordCollection.Add("Hide face", HideFace);
-            keywordCollection.Add("Identify", ImageCapture.instance.ExecuteImageCaptureAndAnalysis());
+            keywordCollection.Add("Hello", ImageCapture.instance.ExecuteImageCaptureAndAnalysis);
 
             keywordRecognizer = new KeywordRecognizer(keywordCollection.Keys.ToArray());
             keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
@@ -101,7 +101,7 @@ public class HoloFaceCore : MonoBehaviour
 
         if (nProcessing < 1)
         {
-            SoftwareBitmap image = webcam.GetImage();
+            SoftwareBitmap image = webcam.GetImage();   
             if (image != null)
             {
                 Matrix4x4 webcamToWorldTransform = webcam.WebcamToWorldMatrix;

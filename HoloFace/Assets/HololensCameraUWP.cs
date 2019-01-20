@@ -84,7 +84,7 @@ public class HololensCameraUWP : MonoBehaviour
 
     public void Start()
     {
-        InitializeMediaCapture();
+        //InitializeMediaCapture();
     }
 
     public void Update()
@@ -154,7 +154,7 @@ public class HololensCameraUWP : MonoBehaviour
         return latestFrame.SoftwareBitmap;
     }
 
-    async Task InitializeMediaCapture()
+    public async Task InitializeMediaCapture()
     { 
         await _holoLensMediaFrameSourceGroup.StartAsync();
 

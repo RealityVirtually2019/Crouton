@@ -44,6 +44,7 @@ public class ImageCapture : MonoBehaviour {
     /// </summary>
     void Start()
     {
+        // Initialises user gestures capture
         // Initialises user gestures capture 
         recognizer = new GestureRecognizer();
         recognizer.SetRecognizableGestures(GestureSettings.Tap);
@@ -73,7 +74,7 @@ public class ImageCapture : MonoBehaviour {
     /// <summary>
     /// Begin process of Image Capturing and send To Azure Computer Vision service.
     /// </summary>
-    private void ExecuteImageCaptureAndAnalysis()
+    public void ExecuteImageCaptureAndAnalysis()
     {
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending
             ((res) => res.width * res.height).First();
@@ -93,6 +94,7 @@ public class ImageCapture : MonoBehaviour {
             {
                 string filename = string.Format(@"CapturedImage{0}.jpg", tapsCount);
                 string filePath = Path.Combine(Application.persistentDataPath, filename);
+                Debug.Log("~~~FILEPATH: " + filePath + "\n");
 
                 // Set the image path on the FaceAnalysis class
                 FaceAnalysis.Instance.imagePath = filePath;
@@ -114,6 +116,7 @@ public class ImageCapture : MonoBehaviour {
     /// </summary>
     void OnCapturedPhotoToDisk(PhotoCapture.PhotoCaptureResult result)
     {
+        Debug.Log("~~~ CAPTURED PHOTO TO DISK ~~~");
         photoCaptureObject.StopPhotoModeAsync(OnStoppedPhotoMode);
     }
 
@@ -122,6 +125,7 @@ public class ImageCapture : MonoBehaviour {
     /// </summary>
     void OnStoppedPhotoMode(PhotoCapture.PhotoCaptureResult result)
     {
+        Debug.Log("~~~ STOPPED PHOTO MODE ~~~");
         photoCaptureObject.Dispose();
         photoCaptureObject = null;
 
