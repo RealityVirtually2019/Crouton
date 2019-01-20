@@ -118,9 +118,9 @@ public class ItemManager : MonoBehaviour
 
         if (debugMode && AttributeText != null)
         {
-            AttributeText.text = "Mouth open: " + mouthOpen.ToString() + ", val: " + blendshapeWeights[MouthOpenBlendshapeIdx].ToString("0.00") + "\n";
-            AttributeText.text += "Smile: " + smile.ToString() + ", val: " + blendshapeWeights[SmileBlendshapeIdx].ToString("0.00") + "\n";
-            AttributeText.text += "Eyebrows Raised: " + eyeBrowsRaised.ToString() + ", val: " + (-blendshapeWeights[EyeBrowRaiseBlendshapeIdx]).ToString("0.00") + "\n";
+            //AttributeText.text = "Mouth open: " + mouthOpen.ToString() + ", val: " + blendshapeWeights[MouthOpenBlendshapeIdx].ToString("0.00") + "\n";
+            //AttributeText.text += "Smile: " + smile.ToString() + ", val: " + blendshapeWeights[SmileBlendshapeIdx].ToString("0.00") + "\n";
+            //AttributeText.text += "Eyebrows Raised: " + eyeBrowsRaised.ToString() + ", val: " + (-blendshapeWeights[EyeBrowRaiseBlendshapeIdx]).ToString("0.00") + "\n";
         }
     }
 
