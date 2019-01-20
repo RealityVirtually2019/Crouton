@@ -67,6 +67,7 @@ public class HoloFaceCore : MonoBehaviour
             keywordCollection.Add("Local", LocalProcessing);
             keywordCollection.Add("Show face", ShowFace);
             keywordCollection.Add("Hide face", HideFace);
+            keywordCollection.Add("Identify", ImageCapture.instance.ExecuteImageCaptureAndAnalysis());
 
             keywordRecognizer = new KeywordRecognizer(keywordCollection.Keys.ToArray());
             keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
